@@ -2,7 +2,32 @@
 {
     public static class ImageUtils
     {
+        public static Dictionary<string, Image> ImageResources = new Dictionary<string, Image>();
+        public static Dictionary<string, PictureBox> ActivePictureBoxes = new Dictionary<string, PictureBox>();
         public static Image? LoadingImage { get; set; }
+
+        public static Image? GetImageById(string id)
+        {
+
+            if (ImageResources.ContainsKey(id))
+                return ImageResources[id];
+            else
+                return LoadingImage;
+        }
+
+        public static bool CacheImage(string imageId, Image image)
+        {
+            PictureBox? pb = ActivePictureBoxes.GetValueOrDefault(imageId);
+
+            if (pb == null)
+                return false;
+            else
+                ImageResources.Add(imageId, image);
+
+            pb.Image = ResizeAndCropToSquare(image);
+
+            return true;
+        }
 
         public static Image ResizeAndCropToSquare(Image image, int newSize = 50)
         {

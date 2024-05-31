@@ -16,7 +16,7 @@
             loginTimeoutTimer?.Stop();
             loginButton.Enabled = true;
             registerButton.Enabled = true;
-            string[] parts = data.Split('~');
+            string[] parts = data.Split("~sp~");
             string command = parts[0];
             string[] args = parts.Skip(1).ToArray();
 
@@ -94,7 +94,7 @@
         private void InitializeLoginTimeoutTimer()
         {
             loginTimeoutTimer = new();
-            loginTimeoutTimer.Interval = 5000; // 10 секунд
+            loginTimeoutTimer.Interval = 5000;
             loginTimeoutTimer.Tick += LoginTimeoutTimer_Tick;
         }
 

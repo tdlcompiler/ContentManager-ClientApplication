@@ -30,10 +30,10 @@
         {
             panelUserInfo = new Panel();
             button1 = new Button();
-            labelStatusServer = new Label();
-            labelOnlineUsers = new Label();
             labelServerStatus = new Label();
             labelOnlineUsersCount = new Label();
+            labelStatusServer = new Label();
+            labelOnlineUsers = new Label();
             labelUserRole = new Label();
             labelUserNickname = new Label();
             pictureBoxAvatar = new PictureBox();
@@ -77,10 +77,30 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
+            // labelServerStatus
+            // 
+            labelServerStatus.AutoSize = true;
+            labelServerStatus.Location = new Point(785, 22);
+            labelServerStatus.Margin = new Padding(4, 0, 4, 0);
+            labelServerStatus.Name = "labelServerStatus";
+            labelServerStatus.Size = new Size(71, 15);
+            labelServerStatus.TabIndex = 4;
+            labelServerStatus.Text = "Неизвестно";
+            // 
+            // labelOnlineUsersCount
+            // 
+            labelOnlineUsersCount.AutoSize = true;
+            labelOnlineUsersCount.Location = new Point(853, 3);
+            labelOnlineUsersCount.Margin = new Padding(4, 0, 4, 0);
+            labelOnlineUsersCount.Name = "labelOnlineUsersCount";
+            labelOnlineUsersCount.Size = new Size(71, 15);
+            labelOnlineUsersCount.TabIndex = 3;
+            labelOnlineUsersCount.Text = "Неизвестно";
+            // 
             // labelStatusServer
             // 
             labelStatusServer.AutoSize = true;
-            labelStatusServer.Location = new Point(760, 56);
+            labelStatusServer.Location = new Point(693, 22);
             labelStatusServer.Margin = new Padding(4, 0, 4, 0);
             labelStatusServer.Name = "labelStatusServer";
             labelStatusServer.Size = new Size(96, 15);
@@ -90,30 +110,12 @@
             // labelOnlineUsers
             // 
             labelOnlineUsers.AutoSize = true;
-            labelOnlineUsers.Location = new Point(693, 37);
+            labelOnlineUsers.Location = new Point(693, 3);
             labelOnlineUsers.Margin = new Padding(4, 0, 4, 0);
             labelOnlineUsers.Name = "labelOnlineUsers";
             labelOnlineUsers.Size = new Size(163, 15);
             labelOnlineUsers.TabIndex = 5;
             labelOnlineUsers.Text = "Количество пользователей: ";
-            // 
-            // labelServerStatus
-            // 
-            labelServerStatus.AutoSize = true;
-            labelServerStatus.Location = new Point(797, 52);
-            labelServerStatus.Margin = new Padding(4, 0, 4, 0);
-            labelServerStatus.Name = "labelServerStatus";
-            labelServerStatus.Size = new Size(0, 15);
-            labelServerStatus.TabIndex = 4;
-            // 
-            // labelOnlineUsersCount
-            // 
-            labelOnlineUsersCount.AutoSize = true;
-            labelOnlineUsersCount.Location = new Point(830, 18);
-            labelOnlineUsersCount.Margin = new Padding(4, 0, 4, 0);
-            labelOnlineUsersCount.Name = "labelOnlineUsersCount";
-            labelOnlineUsersCount.Size = new Size(0, 15);
-            labelOnlineUsersCount.TabIndex = 3;
             // 
             // labelUserRole
             // 
@@ -218,6 +220,7 @@
             Name = "OwnerMainForm";
             Text = "OwnerMainForm";
             FormClosing += OwnerMainForm_FormClosing;
+            Load += OwnerMainForm_Load;
             panelUserInfo.ResumeLayout(false);
             panelUserInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxAvatar).EndInit();

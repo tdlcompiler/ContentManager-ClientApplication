@@ -15,13 +15,14 @@ namespace ContentManager_Application
 
         private void AvatarsGrid_AvatarSelected(object sender, EventArgs e)
         {
+            avatarsGrid.Enabled = false;
             userAvatarPb.Image = ImageUtils.LoadingImage;
             Program.client?.SendMessage($"updateuseravatar~{avatarsGrid.selectedPictureBox?.Tag}");
         }
 
         public bool HandleMessage(string data)
         {
-            string[] parts = data.Split('~');
+            string[] parts = data.Split("~sp~");
             string command = parts[0];
             string[] args = parts.Skip(1).ToArray();
 
@@ -53,13 +54,19 @@ namespace ContentManager_Application
             {
                 lblUserNick.Text = args[0];
                 lblUserRole.Text = args[1];
-                Image image = ImageUtils.ImageFromBase64(args[2]);
-                userAvatarPb.Image = ImageUtils.ResizeAndCropToSquare(image, userAvatarPb.Height);
+                string imageId = args[2];
+                Image? image = ImageUtils.GetImageById(imageId);
+                if (image == null || image.Tag?.ToString() == "temp")
+                    Program.client?.RequestImage(imageId);
+                if (image != null)
+                    userAvatarPb.Image = ImageUtils.ResizeAndCropToSquare(image, userAvatarPb.Height);
 
                 int x = (userInfoPanel.Width - lblUserNick.Width) / 2;
                 lblUserNick.Location = new Point(x, lblUserNick.Location.Y);
                 x = (userInfoPanel.Width - lblUserRole.Width) / 2;
                 lblUserRole.Location = new Point(x, lblUserRole.Location.Y);
+
+                avatarsGrid.Enabled = true;
             }
         }
 
@@ -72,11 +79,13 @@ namespace ContentManager_Application
                     Dictionary<string, Image> avatars = new Dictionary<string, Image>();
                     for (int i = 0; i < args.Length; i++)
                     {
-                        string[] imageIdAndBase64 = args[i].Split(':');
-                        string imageId = imageIdAndBase64[0];
-                        string imageBase64 = imageIdAndBase64[1];
-                        Image image = ImageUtils.ImageFromBase64(imageBase64);
-                        avatars.Add(imageId, image);
+                        string imageId = args[i];
+                        Image? image = ImageUtils.GetImageById(imageId);
+                        if (image == null || image.Tag?.ToString() == "temp")
+                            Program.client?.RequestImage(imageId);
+                        if (image != null)
+                            avatars.Add(imageId, image);
+
                     }
                     avatarsGrid.InitializeGrid(3, avatars);
                 }
