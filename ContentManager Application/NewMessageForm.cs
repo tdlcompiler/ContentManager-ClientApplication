@@ -44,7 +44,7 @@ namespace ContentManager_Application
 
         private void openFileStickerDialog_FileOk(object sender, CancelEventArgs e)
         {
-            lblLoadedFile.Text = openFileImageDialog.FileName;
+            lblLoadedFile.Text = openFileStickerDialog.FileName;
         }
 
         private void openFileImageDialog_FileOk(object sender, CancelEventArgs e)

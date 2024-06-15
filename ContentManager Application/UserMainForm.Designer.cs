@@ -20,6 +20,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserMainForm));
             panelUserInfo = new Panel();
+            btnLogout = new Button();
             labelServerStatus = new Label();
             labelOnlineUsersCount = new Label();
             labelStatusServer = new Label();
@@ -43,7 +44,6 @@
             btnEditNovel = new Button();
             pbLoadingNovels = new PictureBox();
             dataGridViewNovels = new DataGridView();
-            btnLogout = new Button();
             panelUserInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxAvatar).BeginInit();
             tabControl.SuspendLayout();
@@ -74,6 +74,17 @@
             panelUserInfo.Name = "panelUserInfo";
             panelUserInfo.Size = new Size(870, 80);
             panelUserInfo.TabIndex = 1;
+            // 
+            // btnLogout
+            // 
+            btnLogout.Anchor = AnchorStyles.Right;
+            btnLogout.Location = new Point(439, 34);
+            btnLogout.Name = "btnLogout";
+            btnLogout.Size = new Size(75, 23);
+            btnLogout.TabIndex = 16;
+            btnLogout.Text = "Выйти";
+            btnLogout.UseVisualStyleBackColor = true;
+            btnLogout.Click += btnLogout_Click;
             // 
             // labelServerStatus
             // 
@@ -121,7 +132,8 @@
             // 
             // btnEditProfile
             // 
-            btnEditProfile.Location = new Point(152, 6);
+            btnEditProfile.Anchor = AnchorStyles.Right;
+            btnEditProfile.Location = new Point(520, 25);
             btnEditProfile.Name = "btnEditProfile";
             btnEditProfile.Size = new Size(99, 40);
             btnEditProfile.TabIndex = 7;
@@ -357,16 +369,6 @@
             dataGridViewNovels.Size = new Size(862, 417);
             dataGridViewNovels.TabIndex = 4;
             dataGridViewNovels.Scroll += dataGridViewNovels_Scroll;
-            // 
-            // btnLogout
-            // 
-            btnLogout.Location = new Point(164, 52);
-            btnLogout.Name = "btnLogout";
-            btnLogout.Size = new Size(75, 23);
-            btnLogout.TabIndex = 16;
-            btnLogout.Text = "Выйти";
-            btnLogout.UseVisualStyleBackColor = true;
-            btnLogout.Click += btnLogout_Click;
             // 
             // UserMainForm
             // 

@@ -53,7 +53,7 @@
             comboBoxMsgTypes.Items.AddRange(new object[] { "Текст", "Изображение", "Стикер (Unity-префаб)" });
             comboBoxMsgTypes.Location = new Point(12, 124);
             comboBoxMsgTypes.Name = "comboBoxMsgTypes";
-            comboBoxMsgTypes.Size = new Size(326, 23);
+            comboBoxMsgTypes.Size = new Size(446, 23);
             comboBoxMsgTypes.TabIndex = 24;
             comboBoxMsgTypes.SelectedIndexChanged += comboBoxMsgTypes_SelectedIndexChanged;
             // 
@@ -73,7 +73,7 @@
             messageInfoPanel.Dock = DockStyle.Top;
             messageInfoPanel.Location = new Point(0, 0);
             messageInfoPanel.Name = "messageInfoPanel";
-            messageInfoPanel.Size = new Size(348, 83);
+            messageInfoPanel.Size = new Size(468, 83);
             messageInfoPanel.TabIndex = 22;
             // 
             // lblMessageSenderName
@@ -81,7 +81,7 @@
             lblMessageSenderName.Anchor = AnchorStyles.Top;
             lblMessageSenderName.AutoSize = true;
             lblMessageSenderName.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            lblMessageSenderName.Location = new Point(115, 45);
+            lblMessageSenderName.Location = new Point(175, 45);
             lblMessageSenderName.Name = "lblMessageSenderName";
             lblMessageSenderName.Size = new Size(113, 17);
             lblMessageSenderName.TabIndex = 1;
@@ -92,7 +92,7 @@
             lblMessage.Anchor = AnchorStyles.Top;
             lblMessage.AutoSize = true;
             lblMessage.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            lblMessage.Location = new Point(115, 9);
+            lblMessage.Location = new Point(175, 9);
             lblMessage.Name = "lblMessage";
             lblMessage.Size = new Size(115, 25);
             lblMessage.TabIndex = 0;
@@ -113,7 +113,7 @@
             textBoxSetSenderName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             textBoxSetSenderName.Location = new Point(12, 177);
             textBoxSetSenderName.Name = "textBoxSetSenderName";
-            textBoxSetSenderName.Size = new Size(326, 23);
+            textBoxSetSenderName.Size = new Size(446, 23);
             textBoxSetSenderName.TabIndex = 26;
             textBoxSetSenderName.TextChanged += textBoxSetSenderName_TextChanged;
             // 
@@ -132,7 +132,7 @@
             textBoxSetText.Location = new Point(12, 230);
             textBoxSetText.Multiline = true;
             textBoxSetText.Name = "textBoxSetText";
-            textBoxSetText.Size = new Size(326, 71);
+            textBoxSetText.Size = new Size(446, 71);
             textBoxSetText.TabIndex = 28;
             // 
             // openFileImageDialog
@@ -168,7 +168,7 @@
             // btnSaveMessage
             // 
             btnSaveMessage.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnSaveMessage.Location = new Point(261, 434);
+            btnSaveMessage.Location = new Point(381, 434);
             btnSaveMessage.Name = "btnSaveMessage";
             btnSaveMessage.Size = new Size(75, 23);
             btnSaveMessage.TabIndex = 31;
@@ -180,7 +180,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(348, 469);
+            ClientSize = new Size(468, 469);
             Controls.Add(btnSaveMessage);
             Controls.Add(lblLoadedFile);
             Controls.Add(btnLoadFile);
@@ -191,7 +191,7 @@
             Controls.Add(comboBoxMsgTypes);
             Controls.Add(lblSetMessageType);
             Controls.Add(messageInfoPanel);
-            MinimumSize = new Size(364, 508);
+            MinimumSize = new Size(484, 508);
             Name = "NewMessageForm";
             Text = "Сообщение";
             FormClosing += NewMessageForm_FormClosing;

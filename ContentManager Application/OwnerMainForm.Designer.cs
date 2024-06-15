@@ -223,7 +223,8 @@
             // 
             // button1
             // 
-            button1.Location = new Point(152, 6);
+            button1.Anchor = AnchorStyles.Right;
+            button1.Location = new Point(520, 25);
             button1.Name = "button1";
             button1.Size = new Size(99, 40);
             button1.TabIndex = 7;
@@ -251,7 +252,8 @@
             // 
             // btnLogout
             // 
-            btnLogout.Location = new Point(164, 52);
+            btnLogout.Anchor = AnchorStyles.Right;
+            btnLogout.Location = new Point(439, 34);
             btnLogout.Name = "btnLogout";
             btnLogout.Size = new Size(75, 23);
             btnLogout.TabIndex = 8;

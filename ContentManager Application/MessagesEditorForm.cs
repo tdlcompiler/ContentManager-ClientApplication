@@ -141,11 +141,9 @@ namespace ContentManager_Application
 
             if (dataGridViewMessages.Columns[e.ColumnIndex].Name == "ImageCol" && message.MessageTypeId == 2)
             {
-                foreach (DataGridViewRow row in dataGridViewMessages.Rows)
-                {
-                    DataGridViewCell avatarCell = row.Cells["ImageCol"];
-                    LoadImageInCellById(message.Content, avatarCell);
-                }
+                var row = dataGridViewMessages.Rows[e.RowIndex];
+                DataGridViewCell avatarCell = row.Cells["ImageCol"];
+                LoadImageInCellById(message.Content, avatarCell);
             }
         }
 
