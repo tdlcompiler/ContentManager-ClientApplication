@@ -75,7 +75,9 @@ namespace ContentManager_Application
                 MessageBox.Show("Client already connected!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            await client.ConnectToServer("127.0.0.1", 12361);
+
+            ServerSocket config = ServerSocket.LoadConfig();
+            await client.ConnectToServer(config.IpAddress, config.Port);
         }
 
         public static void CloseConnect()
