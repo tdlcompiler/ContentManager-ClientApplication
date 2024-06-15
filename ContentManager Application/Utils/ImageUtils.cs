@@ -3,8 +3,9 @@
     public static class ImageUtils
     {
         public static Dictionary<string, Image> ImageResources = new Dictionary<string, Image>();
-        public static Dictionary<string, PictureBox> ActivePictureBoxes = new Dictionary<string, PictureBox>();
-        public static Image? LoadingImage { get; set; }
+        public static Dictionary<string, List<PictureBox>> ActivePictureBoxes = new Dictionary<string, List<PictureBox>>();
+        public static Dictionary<string, List<DataGridViewCell>> ActiveDataGridViewCells = new Dictionary<string, List<DataGridViewCell>>();
+        public static Image LoadingImage = Properties.Resources.pngwing_com__6_;
 
         public static Image? GetImageById(string id)
         {
@@ -15,33 +16,44 @@
                 return LoadingImage;
         }
 
-        public static bool CacheImage(string imageId, Image image)
+        public static void AddPictureBoxToCacheListener(string key, PictureBox pb)
         {
-            PictureBox? pb = ActivePictureBoxes.GetValueOrDefault(imageId);
-
-            if (pb == null)
-                return false;
-            else
-                ImageResources.Add(imageId, image);
-
-            pb.Image = ResizeAndCropToSquare(image);
-
-            return true;
+            if (!ActivePictureBoxes.ContainsKey(key))
+                ActivePictureBoxes.Add(key, new List<PictureBox>());
+            ActivePictureBoxes[key].Add(pb);
         }
 
-        public static Image ResizeAndCropToSquare(Image image, int newSize = 50)
+        public static void AddDataGridViewCellToCacheListener(string key, DataGridViewCell dgvc)
         {
-            int minSize = Math.Min(image.Width, image.Height);
+            if (!ActiveDataGridViewCells.ContainsKey(key))
+                ActiveDataGridViewCells.Add(key, new List<DataGridViewCell>());
+            ActiveDataGridViewCells[key].Add(dgvc);
+        }
 
-            Bitmap result = new Bitmap(newSize, newSize);
+        public static bool CacheImage(string imageId, Image image)
+        {
+            List<PictureBox>? pbs = ActivePictureBoxes.GetValueOrDefault(imageId);
+            List<DataGridViewCell>? dgvcs = ActiveDataGridViewCells.GetValueOrDefault(imageId);
 
-            using (Graphics g = Graphics.FromImage(result))
-            {
-                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                g.DrawImage(image, new Rectangle(0, 0, newSize, newSize), new Rectangle(0, 0, minSize, minSize), GraphicsUnit.Pixel);
-            }
+            if (pbs == null && dgvcs == null)
+                return false;
+            else if (!ImageResources.ContainsKey(imageId))
+                ImageResources.Add(imageId, image);
 
-            return result;
+            if (pbs != null)
+                foreach (PictureBox pb in pbs)
+                {
+                    if (pb != null)
+                        pb.Image = image;
+                }
+            if (dgvcs != null)
+                foreach (DataGridViewCell dgvc in dgvcs)
+                {
+                    if (dgvc != null)
+                        dgvc.Value = image;
+                }
+
+            return true;
         }
 
         public static Image ImageFromBase64(string base64Image)

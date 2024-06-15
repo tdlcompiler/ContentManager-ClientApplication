@@ -1,3 +1,4 @@
+using ContentManager_Application.Utils;
 using System.Diagnostics;
 using System.Text;
 
@@ -52,6 +53,7 @@ namespace ContentManager_Application
             };*/
 
             ApplicationConfiguration.Initialize();
+            ImageUtils.LoadingImage.Tag = "temp";
             InitClient();
             Application.Run(new ModdedApplicationContext(() => new LoginForm()));
         }

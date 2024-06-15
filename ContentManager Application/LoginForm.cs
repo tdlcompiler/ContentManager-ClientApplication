@@ -3,9 +3,11 @@
     public partial class LoginForm : Form, IServerMessageObserver
     {
         private System.Windows.Forms.Timer? loginTimeoutTimer;
+        private bool connectedToServer;
 
-        public LoginForm()
+        public LoginForm(bool connected = false)
         {
+            connectedToServer = connected;
             InitializeComponent();
             InitializeLoginTimeoutTimer();
             Program.client?.AddObserver(this);
@@ -57,7 +59,7 @@
 
         private void HandleAuthenticationResult(string[] args)
         {
-            if (args.Length != 2)
+            if (args.Length != 3)
             {
                 MessageBox.Show($"Ошибка: Некорректное количество аргументов для HandleAuthenticationResult.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -65,6 +67,7 @@
 
             string authState = args[0];
             string userRole = args[1];
+            int userId = int.Parse(args[2]);
 
             if (authState == "allowed")
             {
@@ -72,11 +75,17 @@
                 switch (userRole)
                 {
                     case "1":
-                        OwnerMainForm ownerForm = new OwnerMainForm();
+                        OwnerMainForm ownerForm = new OwnerMainForm(userId);
                         ownerForm.Show();
                         Close();
                         break;
                     case "2":
+                    case "3":
+                    case "4":
+                        UserMainForm userForm = new UserMainForm(userId);
+                        userForm.Show();
+                        Close();
+                        break;
                     default:
                         break;
                 }
@@ -116,7 +125,10 @@
             Program.client.Connected += Client_Connected;
             Program.client.Disconnected += Client_Disconnected;
 
-            await Program.ConnectToServer();
+            if (!connectedToServer)
+                await Program.ConnectToServer();
+            else
+                Client_Connected(null, EventArgs.Empty);
         }
 
         private void Client_Connected(object? sender, EventArgs e)
@@ -168,7 +180,7 @@
 
             loginTimeoutTimer?.Start();
 
-            Exception? error = Program.client?.SendMessage($"auth~{login}~{password}");
+            Exception? error = Program.client?.SendMessage($"auth~sp~{login}~sp~{password}");
             if (error != null)
             {
                 loginTimeoutTimer?.Stop();
@@ -195,7 +207,7 @@
 
             loginTimeoutTimer?.Start();
 
-            Exception? error = Program.client?.SendMessage($"reg~{login}~{password}");
+            Exception? error = Program.client?.SendMessage($"reg~sp~{login}~sp~{password}");
             if (error != null)
             {
                 loginTimeoutTimer?.Stop();
@@ -241,6 +253,9 @@
                 Program.client.Disconnected -= Client_Disconnected;
             }
             Program.client?.RemoveObserver(this);
+
+            if (Application.OpenForms.Count == 1)
+                Program.CloseConnect();
         }
     }
 }

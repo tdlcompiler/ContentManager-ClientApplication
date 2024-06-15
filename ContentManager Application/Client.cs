@@ -2,6 +2,7 @@
 using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ContentManager_Application
 {
@@ -87,7 +88,7 @@ namespace ContentManager_Application
 
         public void RequestImage(string imageId)
         {
-            Program.client?.SendMessage($"getimagebyid~{imageId}");
+            Program.client?.SendMessage($"getimagebyid~sp~{imageId}");
         }
 
         private void LoadImages(string[] args)
@@ -120,8 +121,8 @@ namespace ContentManager_Application
                 try
                 {
                     Image image = ImageUtils.ImageFromBase64(args[0]);
-                    ImageUtils.LoadingImage = ImageUtils.ResizeAndCropToSquare(image, 100);
-                    ImageUtils.LoadingImage.Tag = "temp";
+                    image.Tag = "temp";
+                    ImageUtils.LoadingImage = image;
                 }
                 catch (Exception ex)
                 {
@@ -178,14 +179,12 @@ namespace ContentManager_Application
             try
             {
                 string encryptedMessage = EncryptMessage(message);
-                int chunkSize = 32768; // Размер чанка, например, 2048 символа
-                                      // Отправляем сообщение чанками
+                int chunkSize = 32768;
                 for (int i = 0; i < encryptedMessage.Length; i += chunkSize)
                 {
                     string chunk = encryptedMessage.Substring(i, Math.Min(chunkSize, encryptedMessage.Length - i));
                     writer?.WriteLine($"~chunk~{chunk}");
                 }
-                // Отправляем конец передачи
                 writer?.WriteLine("~end~");
                 return null;
             }
@@ -215,7 +214,7 @@ namespace ContentManager_Application
                             }
                             else if (encryptedMessageChunk.StartsWith("~chunk~"))
                             {
-                                serverMessageBuilder.Append(encryptedMessageChunk.Remove(0, 7)); // Убираем префикс ~chunk~
+                                serverMessageBuilder.Append(encryptedMessageChunk.Remove(0, 7)); // Убираем префикс ~sp~chunk~sp~
                             }
                         }
                     }

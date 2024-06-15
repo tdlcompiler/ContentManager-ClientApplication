@@ -53,8 +53,7 @@ namespace ContentManager_Application
                     Margin = new Padding(margin),
                     Size = new Size(imageSize, imageSize)
                 };
-                if (!ImageUtils.ActivePictureBoxes.ContainsKey(keyImagePair.Key))
-                    ImageUtils.ActivePictureBoxes.Add(keyImagePair.Key, pictureBox);
+                ImageUtils.AddPictureBoxToCacheListener(keyImagePair.Key, pictureBox);
                 pictureBox.Image = keyImagePair.Value;
                 pictureBox.Click += PictureBox_Click;
                 pictureBox.Tag = keyImagePair.Key;

@@ -117,25 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="pictureBoxLoading.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="buttonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAAR9JREFUOE/VlE1KhlAYhS0CJxFJP1iKtIEmUSsQAilcQTRpD+6hPTgRVxCKILQC
-        xYkbkDANf1A+nHwgap0vLtzBW9GsBg/iOec9XO8LCsuyfMk8z1t5nqvTNG1TPoMUGYZhBMJHRNf1Z8pn
-        kCIYhmEXBYy2bQ+oHCBF0DTNIV9SFMUplQOkCKqqOv6HJavVas80zSdFUV55ZFl+40vwzjxVVXNN016w
-        va7rJMFxnHs+/Fts234Q0jQ9F0VxTQV+AnNxHF9uvinLsrMwDK+DIDA8z7sFruve8QM4MfN8379BFnOb
-        O+EviOfvrLiu6yO+pCzLEyoHSBH0fb/Pl2CVVA6QIhjHcUeSpA4FeH73OyBFRpIkF5ZlPUZRdEX5nyzC
-        O3MBtL4+VYajAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <metadata name="pictureBoxLoading.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pictureBoxAvatar.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
 </root>
