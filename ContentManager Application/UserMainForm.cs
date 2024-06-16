@@ -7,6 +7,8 @@ namespace ContentManager_Application
 {
     public partial class UserMainForm : Form, IServerMessageObserver
     {
+        private event Action<string> OnSaveRequestMessageReceived;
+
         private System.Windows.Forms.Timer? serverInfoTimer;
         private int nextAuthorIndex = 0;
         private int nextNovelIndex = 0;
@@ -42,6 +44,11 @@ namespace ContentManager_Application
 
             switch (command.ToLower())
             {
+                case "setallnovels":
+                case "setallauthors":
+                case "setallmessages":
+                    OnSaveRequestMessageReceived?.Invoke(data);
+                    return true;
                 case "updateserverinfo":
                     if (args.Length > 0)
                     {
@@ -623,6 +630,121 @@ namespace ContentManager_Application
                 Program.client?.SendMessage("logout");
             }
         }
+
+        private async void btnAuthorsToJSON_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ShowLoadingIndicator();
+                btnAuthorsToJSON.Enabled = false;
+                var authors = await FetchDataFromServer<AuthorData>("getauthorlist", "setallauthors");
+                SaveAuthorsToJSON(authors);
+                HideLoadingIndicator();
+                btnAuthorsToJSON.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+
+        private async void btnNovelsToJSON_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ShowLoadingIndicator();
+                btnNovelsToJSON.Enabled = false;
+                var novels = await FetchDataFromServer<NovelData>("getnovellist", "setallnovels");
+                foreach (var novel in novels)
+                {
+                    if (novel.Chapters != null && novel.Chapters.Count > 0)
+                        novel.Chapters = await FetchMessages(novel);
+                }
+                SaveNovelsToJSON(novels);
+                HideLoadingIndicator();
+                btnNovelsToJSON.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+
+        private Task<List<T>> FetchDataFromServer<T>(string requestMessage, string responseType)
+        {
+            var tcs = new TaskCompletionSource<List<T>>();
+
+            void Handler(string data)
+            {
+                var parts = data.Split(new[] { "~sp~" }, StringSplitOptions.None);
+                var messageType = parts[0];
+                if (messageType == responseType)
+                {
+                    var jsonData = parts[1];
+                    var list = JsonConvert.DeserializeObject<List<T>>(jsonData);
+                    tcs.SetResult(list);
+                    OnSaveRequestMessageReceived -= Handler;
+                }
+            }
+
+            OnSaveRequestMessageReceived += Handler;
+            Program.client?.SendMessage(requestMessage);
+
+            return tcs.Task;
+        }
+
+        private async Task<BindingList<Chapter>> FetchMessages(NovelData novel)
+        {
+            var chapters = novel.Chapters;
+            foreach (var chapter in chapters)
+            {
+                var messages = await FetchDataFromServer<Message>($"getmessages~sp~{chapter.Id}", "setallmessages");
+                chapter.Messages = new List<Message>(messages);
+            }
+            return new BindingList<Chapter>(chapters);
+        }
+
+        private void SaveAuthorsToJSON(List<AuthorData> authors)
+        {
+            using (var folderDialog = new FolderBrowserDialog())
+            {
+                if (folderDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string folderPath = Path.Combine(folderDialog.SelectedPath, "Authors");
+                    Directory.CreateDirectory(folderPath);
+
+                    foreach (var author in authors)
+                    {
+                        string filePath = Path.Combine(folderPath, $"{author.Name}.json");
+                        string json = JsonConvert.SerializeObject(author, Formatting.Indented);
+                        File.WriteAllText(filePath, json);
+                    }
+
+                    MessageBox.Show("Конфигурации авторов успешно сохранены локально!", "Сохранение авторов", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void SaveNovelsToJSON(List<NovelData> novels)
+        {
+            using (var folderDialog = new FolderBrowserDialog())
+            {
+                if (folderDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string folderPath = Path.Combine(folderDialog.SelectedPath, "Novels");
+                    Directory.CreateDirectory(folderPath);
+
+                    foreach (var novel in novels)
+                    {
+                        string filePath = Path.Combine(folderPath, $"{novel.Title}.json");
+                        string json = JsonConvert.SerializeObject(novel, Formatting.Indented);
+                        File.WriteAllText(filePath, json);
+                    }
+
+                    MessageBox.Show("Конфигурации новелл успешно сохранены локально!", "Сохранение новелл", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
     }
 
     public class AuthorData : INotifyPropertyChanged
@@ -689,8 +811,8 @@ namespace ContentManager_Application
     public class Chapter : INotifyPropertyChanged
     {
         private string title = string.Empty;
-
         private int id;
+        public List<Message> Messages = new List<Message>();
 
         public int Id
         {
@@ -735,6 +857,8 @@ namespace ContentManager_Application
         private int authorId;
         private string authorName = string.Empty;
         private BindingList<Chapter> chapters = new BindingList<Chapter>();
+
+        [JsonIgnore]
         private BindingList<Chapter>? initialChapters;
 
         public int Id
@@ -826,6 +950,7 @@ namespace ContentManager_Application
             }
         }
 
+        [JsonIgnore]
         public string AuthorName
         {
             get { return authorName; }

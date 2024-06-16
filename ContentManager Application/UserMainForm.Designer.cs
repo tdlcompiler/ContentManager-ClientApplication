@@ -37,7 +37,11 @@
             buttonEditAuthor = new Button();
             pbLoadingAuthors = new PictureBox();
             dataGridViewAuthors = new DataGridView();
+            panel1 = new Panel();
+            btnAuthorsToJSON = new Button();
             tabPageNovels = new TabPage();
+            panel2 = new Panel();
+            btnNovelsToJSON = new Button();
             flowLayoutPanel1 = new FlowLayoutPanel();
             btnAddNovel = new Button();
             btnRemoveNovel = new Button();
@@ -51,7 +55,9 @@
             panelButtonContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbLoadingAuthors).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewAuthors).BeginInit();
+            panel1.SuspendLayout();
             tabPageNovels.SuspendLayout();
+            panel2.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbLoadingNovels).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewNovels).BeginInit();
@@ -78,7 +84,7 @@
             // btnLogout
             // 
             btnLogout.Anchor = AnchorStyles.Right;
-            btnLogout.Location = new Point(439, 34);
+            btnLogout.Location = new Point(436, 34);
             btnLogout.Name = "btnLogout";
             btnLogout.Size = new Size(75, 23);
             btnLogout.TabIndex = 16;
@@ -90,7 +96,7 @@
             // 
             labelServerStatus.Anchor = AnchorStyles.Right;
             labelServerStatus.AutoSize = true;
-            labelServerStatus.Location = new Point(718, 46);
+            labelServerStatus.Location = new Point(715, 46);
             labelServerStatus.Margin = new Padding(4, 0, 4, 0);
             labelServerStatus.Name = "labelServerStatus";
             labelServerStatus.Size = new Size(71, 15);
@@ -101,7 +107,7 @@
             // 
             labelOnlineUsersCount.Anchor = AnchorStyles.Right;
             labelOnlineUsersCount.AutoSize = true;
-            labelOnlineUsersCount.Location = new Point(786, 27);
+            labelOnlineUsersCount.Location = new Point(783, 27);
             labelOnlineUsersCount.Margin = new Padding(4, 0, 4, 0);
             labelOnlineUsersCount.Name = "labelOnlineUsersCount";
             labelOnlineUsersCount.Size = new Size(71, 15);
@@ -112,7 +118,7 @@
             // 
             labelStatusServer.Anchor = AnchorStyles.Right;
             labelStatusServer.AutoSize = true;
-            labelStatusServer.Location = new Point(626, 46);
+            labelStatusServer.Location = new Point(623, 46);
             labelStatusServer.Margin = new Padding(4, 0, 4, 0);
             labelStatusServer.Name = "labelStatusServer";
             labelStatusServer.Size = new Size(96, 15);
@@ -123,7 +129,7 @@
             // 
             labelOnlineUsers.Anchor = AnchorStyles.Right;
             labelOnlineUsers.AutoSize = true;
-            labelOnlineUsers.Location = new Point(626, 27);
+            labelOnlineUsers.Location = new Point(623, 27);
             labelOnlineUsers.Margin = new Padding(4, 0, 4, 0);
             labelOnlineUsers.Name = "labelOnlineUsers";
             labelOnlineUsers.Size = new Size(163, 15);
@@ -133,7 +139,7 @@
             // btnEditProfile
             // 
             btnEditProfile.Anchor = AnchorStyles.Right;
-            btnEditProfile.Location = new Point(520, 25);
+            btnEditProfile.Location = new Point(517, 25);
             btnEditProfile.Name = "btnEditProfile";
             btnEditProfile.Size = new Size(99, 40);
             btnEditProfile.TabIndex = 7;
@@ -188,6 +194,7 @@
             // 
             tabPageAuthors.Controls.Add(panelButtonContainer);
             tabPageAuthors.Controls.Add(dataGridViewAuthors);
+            tabPageAuthors.Controls.Add(panel1);
             tabPageAuthors.Location = new Point(4, 24);
             tabPageAuthors.Name = "tabPageAuthors";
             tabPageAuthors.Padding = new Padding(3);
@@ -198,15 +205,15 @@
             // 
             // panelButtonContainer
             // 
+            panelButtonContainer.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panelButtonContainer.AutoSize = true;
             panelButtonContainer.Controls.Add(buttonAddAuthor);
             panelButtonContainer.Controls.Add(buttonRemoveAuthor);
             panelButtonContainer.Controls.Add(buttonEditAuthor);
             panelButtonContainer.Controls.Add(pbLoadingAuthors);
-            panelButtonContainer.Dock = DockStyle.Bottom;
             panelButtonContainer.Location = new Point(3, 420);
             panelButtonContainer.Name = "panelButtonContainer";
-            panelButtonContainer.Size = new Size(856, 33);
+            panelButtonContainer.Size = new Size(715, 33);
             panelButtonContainer.TabIndex = 5;
             // 
             // buttonAddAuthor
@@ -277,8 +284,28 @@
             dataGridViewAuthors.TabIndex = 4;
             dataGridViewAuthors.Scroll += dataGridViewAuthors_Scroll;
             // 
+            // panel1
+            // 
+            panel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            panel1.Controls.Add(btnAuthorsToJSON);
+            panel1.Location = new Point(721, 420);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(138, 33);
+            panel1.TabIndex = 7;
+            // 
+            // btnAuthorsToJSON
+            // 
+            btnAuthorsToJSON.Location = new Point(3, 5);
+            btnAuthorsToJSON.Name = "btnAuthorsToJSON";
+            btnAuthorsToJSON.Size = new Size(132, 23);
+            btnAuthorsToJSON.TabIndex = 0;
+            btnAuthorsToJSON.Text = "Выгрузить авторов";
+            btnAuthorsToJSON.UseVisualStyleBackColor = true;
+            btnAuthorsToJSON.Click += btnAuthorsToJSON_Click;
+            // 
             // tabPageNovels
             // 
+            tabPageNovels.Controls.Add(panel2);
             tabPageNovels.Controls.Add(flowLayoutPanel1);
             tabPageNovels.Controls.Add(dataGridViewNovels);
             tabPageNovels.Location = new Point(4, 24);
@@ -289,17 +316,36 @@
             tabPageNovels.Text = "Новеллы";
             tabPageNovels.UseVisualStyleBackColor = true;
             // 
+            // panel2
+            // 
+            panel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            panel2.Controls.Add(btnNovelsToJSON);
+            panel2.Location = new Point(721, 420);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(138, 33);
+            panel2.TabIndex = 8;
+            // 
+            // btnNovelsToJSON
+            // 
+            btnNovelsToJSON.Location = new Point(3, 5);
+            btnNovelsToJSON.Name = "btnNovelsToJSON";
+            btnNovelsToJSON.Size = new Size(132, 23);
+            btnNovelsToJSON.TabIndex = 0;
+            btnNovelsToJSON.Text = "Выгрузить новеллы";
+            btnNovelsToJSON.UseVisualStyleBackColor = true;
+            btnNovelsToJSON.Click += btnNovelsToJSON_Click;
+            // 
             // flowLayoutPanel1
             // 
+            flowLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             flowLayoutPanel1.AutoSize = true;
             flowLayoutPanel1.Controls.Add(btnAddNovel);
             flowLayoutPanel1.Controls.Add(btnRemoveNovel);
             flowLayoutPanel1.Controls.Add(btnEditNovel);
             flowLayoutPanel1.Controls.Add(pbLoadingNovels);
-            flowLayoutPanel1.Dock = DockStyle.Bottom;
             flowLayoutPanel1.Location = new Point(3, 420);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(856, 33);
+            flowLayoutPanel1.Size = new Size(715, 33);
             flowLayoutPanel1.TabIndex = 6;
             // 
             // btnAddNovel
@@ -392,8 +438,10 @@
             panelButtonContainer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pbLoadingAuthors).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewAuthors).EndInit();
+            panel1.ResumeLayout(false);
             tabPageNovels.ResumeLayout(false);
             tabPageNovels.PerformLayout();
+            panel2.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
             flowLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pbLoadingNovels).EndInit();
@@ -423,5 +471,9 @@
         private Button btnEditNovel;
         private PictureBox pbLoadingNovels;
         private Button btnLogout;
+        private Panel panel1;
+        private Button btnAuthorsToJSON;
+        private Panel panel2;
+        private Button btnNovelsToJSON;
     }
 }

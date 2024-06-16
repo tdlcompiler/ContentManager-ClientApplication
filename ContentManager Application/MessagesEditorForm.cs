@@ -8,7 +8,7 @@ namespace ContentManager_Application
 {
     public partial class MessagesEditorForm : Form, IServerMessageObserver
     {
-        private static readonly int USERS_PER_REQUEST = 50;
+        private static readonly int MSGS_PER_REQUEST = 50;
 
         private BindingList<Message>? messages;
         private BindingList<MessageType>? messageTypes;
@@ -26,7 +26,7 @@ namespace ContentManager_Application
             Program.client?.AddObserver(this);
             currentNovel = novel;
             currentChapterId = chapterId;
-            Program.client?.SendMessage($"getmessages~sp~{currentChapterId}~sp~{nextMessageIndex}~sp~{nextMessageIndex + USERS_PER_REQUEST}");
+            Program.client?.SendMessage($"getmessages~sp~{currentChapterId}~sp~{nextMessageIndex}~sp~{nextMessageIndex + MSGS_PER_REQUEST}");
         }
 
         public bool HandleMessage(string data)
@@ -82,7 +82,7 @@ namespace ContentManager_Application
 
         private void MessagesEditorForm_Load(object sender, EventArgs e)
         {
-            //InitializeData();
+            InitGridView();
             dataGridViewMessages.DataSource = messages;
 
             if (dataGridViewMessages.Columns["MessageTypeId"] is DataGridViewComboBoxColumn messageTypeColumn)
@@ -93,22 +93,10 @@ namespace ContentManager_Application
             }
         }
 
-        private void InitializeData()
+        private void InitGridView()
         {
-            // Пример данных
-            messageTypes = new BindingList<MessageType>
-            {
-                new MessageType { Id = 1, Name = "Text" },
-                new MessageType { Id = 2, Name = "Image" },
-                new MessageType { Id = 3, Name = "Sticker" }
-            };
-
-            messages = new BindingList<Message>
-            {
-                new Message { Id = 1, Content = "Hello World", ChapterId = 1, MessageTypeId = 1 },
-                new Message { Id = 2, Content = "Image123", ChapterId = 1, MessageTypeId = 2 },
-                new Message { Id = 3, Content = "Sticker456", ChapterId = 1, MessageTypeId = 3 }
-            };
+            dataGridViewMessages.Columns["MessageTypeId"].Visible = false;
+            dataGridViewMessages.Columns["ChapterId"].Visible = false;
         }
 
         public List<Message>? DeserializeMessages(string json)

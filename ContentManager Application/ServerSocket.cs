@@ -26,12 +26,12 @@ namespace ContentManager_Application
                     string json = File.ReadAllText(ConfigFilePath);
                     ServerSocket? serverSocket = JsonConvert.DeserializeObject<ServerSocket>(json);
                     if (serverSocket != null) return serverSocket;
-                    else return defaultConfig;
+                    return new ServerSocket();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading configuration: {ex.Message}", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Ошибка загрузки конфигурации для подключения к серверу: {ex.Message}\nБудет произведена попытка подключиться к локальному серверу со стандартными параметрами.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             defaultConfig.SaveConfig(ConfigFilePath);
@@ -42,12 +42,12 @@ namespace ContentManager_Application
         {
             try
             {
-                string json = JsonConvert.SerializeObject(this);
+                string json = JsonConvert.SerializeObject(this, Formatting.Indented);
                 File.WriteAllText(filePath, json);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error saving configuration: {ex.Message}", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Ошибка сохранения конфигурации: {ex.Message}", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

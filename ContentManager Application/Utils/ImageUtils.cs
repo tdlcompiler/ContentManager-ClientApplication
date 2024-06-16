@@ -41,17 +41,23 @@
                 ImageResources.Add(imageId, image);
 
             if (pbs != null)
+            {
                 foreach (PictureBox pb in pbs)
                 {
                     if (pb != null)
                         pb.Image = image;
                 }
+                ActivePictureBoxes.Remove(imageId);
+            }
             if (dgvcs != null)
+            {
                 foreach (DataGridViewCell dgvc in dgvcs)
                 {
                     if (dgvc != null)
                         dgvc.Value = image;
                 }
+                ActiveDataGridViewCells.Remove(imageId);
+            }
 
             return true;
         }
